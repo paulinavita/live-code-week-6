@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- VUE AX -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- SWL -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
+
+    <title>Classic Fox - First Live Code</title>
+  </head>
+  <body>
+    <div id='app'>
+      <!-- BAGIAN KALO UDAH LOGIN -->
+    <div v-if="isLogin">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">Dad Jokes</a>
+        <a v-on:click.prevent="signOut" class="text-danger">Logout</a>
+      </div>
+    </nav>
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">{{ nowShowingJoke }}.</h1>
+        <hr class="my-4">
+        <p>Do you like this joke?</p>
+        <a v-on:click.prevent="addToFavorite" class="btn btn-success" role="button">Yes, add this to My Favorites</a>
+        <a v-on:click.prevent="getJokes" class="btn btn-danger" role="button">No, generate new joke</a>
+      </div>
+    </div>
+    <div class="container">
+      <h1 class="text-center">My Favorites</h1>
+      <hr class="my-4">
+      <div class="row">
+        <div v-for="(joke, index) in arrFavorite" :key="index" class="col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">{{joke.data.joke}}</p>
+              <a v-on:click="removeFavorites(joke.data._id)" class="card-link text-danger">Remove</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END BAGIAN UDAH LOGIN -->
+
+
+    <!-- BAGIAN LOGIN FORM -->
+
+    <div v-if="!isLogin">
+    <div class="container my-4">
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <div class="card mb-4">
+      <div class="card-header text-center">Login</div>
+      <div class="card-body">
+        <form method="post">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+            v-model="loginEmail"
+        type="email"
+        class="form-control"
+        id="email"
+        aria-describedby="emailHelp"
+        placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">
+        We'll never share your email with anyone else.
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+            v-model="loginPassword"
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="Password">
+          </div>
+          <button v-on:click.prevent="signIn" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="./main.js"></script>
+  </body>
+</html>
